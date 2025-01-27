@@ -13,23 +13,21 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class TransacaoService {
-    private final List<TransacaoRequestDTO>  listaTransacoes = new ArrayList<>();
+    private final List<TransacaoRequestDTO> listaTransacoes = new ArrayList<>();
 
-    public void  adicionarTransacao(TransacaoRequestDTO dto) {
-        if(dto.dataHora().isAfter(OffsetDateTime.now())) {
-            log.error("Data e hora maiores que a  atual");
+    public void adicionarTransacao(TransacaoRequestDTO dto) {
+        if (dto.dataHora().isAfter(OffsetDateTime.now())) {
+            log.error("Data e hora maiores que a atual");
             throw new IllegalArgumentException("Data e hora inválidas");
         }
-        if(dto.valor() < 0 ) {
+        if (dto.valor() < 0) {
             log.error("O valor não pode ser negativo");
-            throw  new IllegalArgumentException("O valor não pode ser menor que 0");
+            throw new IllegalArgumentException("O valor não pode ser menor que 0");
         }
-
         listaTransacoes.add(dto);
     }
 
-    public  void limparTransacoes() {
+    public void limparTransacoes() {
         listaTransacoes.clear();
     }
-
 }

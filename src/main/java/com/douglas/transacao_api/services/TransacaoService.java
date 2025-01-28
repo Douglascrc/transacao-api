@@ -1,6 +1,7 @@
 package com.douglas.transacao_api.services;
 
 import com.douglas.transacao_api.controllers.dtos.TransacaoRequestDTO;
+import com.douglas.transacao_api.infra.exceptions.UnprocessableEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,11 @@ public class TransacaoService {
 
         if (dto.dataHora().isAfter(OffsetDateTime.now())) {
             log.error("Data e hora maiores que a atual");
-            throw new IllegalArgumentException("Data e hora inválidas");
+            throw new UnprocessableEntity("Data e hora inválidas");
         }
         if (dto.valor() < 0) {
             log.error("O valor não pode ser negativo");
-            throw new IllegalArgumentException("O valor não pode ser menor que 0");
+            throw new UnprocessableEntity("O valor não pode ser menor que 0");
         }
         log.info("Transação adicionada com sucesso!");
         listaTransacoes.add(dto);

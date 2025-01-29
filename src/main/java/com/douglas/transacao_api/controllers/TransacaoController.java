@@ -2,10 +2,14 @@ package com.douglas.transacao_api.controllers;
 
 import com.douglas.transacao_api.controllers.dtos.TransacaoRequestDTO;
 import com.douglas.transacao_api.services.TransacaoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -15,6 +19,13 @@ public class TransacaoController {
     private final TransacaoService transacaoService;
 
     @PostMapping
+    @Operation(description = " Endpoint responsável por adicionar transações")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Transação adicionada com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Campos não atendem os requisitos"),
+            @ApiResponse(responseCode= "400", description = " Erro de requisição"),
+            @ApiResponse(responseCode = "500", description = "A transação não pode ser adicionada")
+    })
     public ResponseEntity<Void> adicionarTransacao(@RequestBody TransacaoRequestDTO dto) {
         transacaoService.adicionarTransacao(dto);
 
@@ -22,6 +33,13 @@ public class TransacaoController {
     }
 
     @DeleteMapping
+    @Operation(description = " Endpoint responsável por deletar transações")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Transação deletada com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Campos não atendem os requisitos"),
+            @ApiResponse(responseCode= "400", description = " Erro de requisição"),
+            @ApiResponse(responseCode = "500", description = "A transação não pode ser deletada")
+    })
     public ResponseEntity<Void> deletarTransacao() {
         transacaoService.limparTransacoes();
 

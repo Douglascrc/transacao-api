@@ -13,6 +13,7 @@ Este é projeto é uma API REST simples para gerenciar transações e calcular a
 ## Pré-requisitos
  - Java JDK 21
  - Maven
+ - Docker (Opcional)
 
 ## Como executar o projeto
   1. Clone o repositório

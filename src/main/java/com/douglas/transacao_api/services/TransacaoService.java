@@ -20,7 +20,7 @@ public class TransacaoService {
 
         if (dto.dataHora().isAfter(OffsetDateTime.now())) {
             log.error("Data e hora maiores que a atual");
-            throw new UnprocessableEntity("Data e hora inválidas");
+            throw new UnprocessableEntity("Data e hora maiores que a atual");
         }
         if (dto.valor() < 0) {
             log.error("O valor não pode ser negativo");

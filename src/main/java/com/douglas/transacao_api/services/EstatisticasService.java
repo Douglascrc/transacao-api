@@ -15,7 +15,9 @@ import java.util.List;
 public class EstatisticasService {
     private final TransacaoService transacaoService;
 
-    public EstatisticaResponseDTO  trazerEstatisticas(Integer intervaloBusca) {
+    public EstatisticaResponseDTO  trazerEstatisticas(Integer intervaloBusca
+    ) {
+        long start = System.currentTimeMillis();
         log.info("Buscando transações pelo intervalo de tempo de " + intervaloBusca);
     List<TransacaoRequestDTO> transacoes = transacaoService.buscarTransacoes(intervaloBusca);
 
@@ -25,7 +27,11 @@ public class EstatisticasService {
 
     DoubleSummaryStatistics estatisticasTransacoes  = transacoes.stream().mapToDouble(TransacaoRequestDTO::valor).summaryStatistics();
 
-        log.info("Transações retornadas com sucesso!");
+        long finish = System.currentTimeMillis();
+        long tempoRequisicao = finish - start;
+        System.out.println("Tempo da Requisição:  "+ tempoRequisicao + " milisegundos");
+
+        log.info("Estatisticas retornadas com sucesso!");
         return new EstatisticaResponseDTO(estatisticasTransacoes.getCount(),
                 estatisticasTransacoes.getSum(),
                 estatisticasTransacoes.getAverage(),
